@@ -1,0 +1,24 @@
+<table>
+  <thead>
+  <tr>
+    <th>Monitor</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @monitors.each do |monitor| %>
+    <tr>
+      <td>Determine <a href="<%= monitor[:url] %>" target="_blank"><%= monitor[:determine] %></a>.</td>
+      <td>
+        <span>
+          <%= "Last run #{time_ago_in_words(monitor[:last_run_at])} ago" if monitor[:last_run_at].present? %>
+        </span>
+        <br>
+        <a href="/monitors/<%= monitor[:id] %>">
+          <%= monitor[:completed_at].present? ? '✅' : "#{monitor[:run_count]} #{"run".pluralize(monitor[:run_count])}" %>
+        </a>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

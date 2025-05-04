@@ -1,0 +1,47 @@
+<h1>Determine <%= @monitor[:determine] %></h1>
+<p>URL: <a href="<%= @monitor[:url] %>" target="_blank"><%= @monitor[:url] %></a></p>
+
+<form method="post" action="/monitors/<%= @monitor[:id] %>/run">
+  <button type="submit">Run now</button>
+</form>
+
+<% if @determinations.empty? %>
+  <p>No determinations yet.</p>
+<% else %>
+  <table>
+    <thead>
+    <tr>
+      <th>When</th>
+      <th>Determination</th>
+      <th>Usage</th>
+      <th>Rationale</th>
+      <th>Screenshot</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @determinations.each do |determination| %>
+      <tr>
+        <td>
+          <span title="<%= determination[:created_at] %>">
+            <%= "#{time_ago_in_words(determination[:created_at])} ago" %>
+          </span>
+        </td>
+        <td><%= determination[:outcome] %></td>
+        <td>
+          In: <%= determination[:debug_info]["input_tokens"] %>
+          <br>
+          Out: <%= determination[:debug_info]["output_tokens"] %>
+          <br>
+          Cost: $<%= sprintf('%.5f', (determination[:debug_info]["input_tokens"] * 0.10 + determination[:debug_info]["output_tokens"] * 0.40) / 1_000_000) %>
+        </td>
+        <td style="white-space: pre-line"><%= determination[:debug_info]["content"] %></td>
+        <td>
+          <a href="/determinations/<%= determination[:id] %>/screenshot" target="_blank">
+            <img src="/determinations/<%= determination[:id] %>/screenshot" width="200" alt="Screenshot">
+          </a>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

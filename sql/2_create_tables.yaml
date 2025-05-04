@@ -1,0 +1,49 @@
+name: 2_create_tables
+operations:
+  - create_table:
+      name: monitors
+      columns:
+        - name: id
+          type: uuid
+          default: uuid_generate_v4()
+          pk: true
+        - name: created_at
+          type: timestamp
+          nullable: false
+          default: now()
+        - name: completed_at
+          type: timestamp
+          nullable: true
+        - name: determine
+          type: text
+          nullable: false
+        - name: url
+          type: text
+          nullable: false
+  - create_table:
+      name: determinations
+      columns:
+        - name: id
+          type: uuid
+          default: uuid_generate_v4()
+          pk: true
+        - name: monitor_id
+          type: uuid
+          nullable: false
+          references:
+            name: fk_users_id
+            table: monitors
+            column: id
+        - name: created_at
+          type: timestamp
+          nullable: false
+          default: now()
+        - name: screenshot
+          type: bytea
+          nullable: false
+        - name: debug_info
+          type: json
+          nullable: false
+        - name: outcome
+          type: boolean
+          nullable: false
