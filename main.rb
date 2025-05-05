@@ -21,4 +21,23 @@ RubyLLM.configure do |config|
   config.default_model = "gpt-4.1-nano"
 end
 
-App.run! if __FILE__ == $PROGRAM_NAME
+if __FILE__ == $PROGRAM_NAME
+  Thread.new do
+    loop do
+      begin
+        Check.get_all.each do |monitor|
+          next if monitor[:completed_at].present?
+          next if monitor[:last_run_at] > Time.now.utc - 8.hours
+          puts("Running #{monitor[:id]}")
+          Check.run!(monitor)
+        end
+
+        sleep(1.minute + rand(10.seconds))
+      rescue StandardError => e
+        puts("Error: #{e.message}")
+      end
+    end
+  end
+
+  App.run!
+end

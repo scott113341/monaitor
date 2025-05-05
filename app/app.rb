@@ -1,7 +1,10 @@
 require "action_view"
+require "active_support/security_utils"
 require "sinatra"
 
 class App < Sinatra::Base
+  extend(ActiveSupport::SecurityUtils)
+
   helpers(ActionView::Helpers::DateHelper)
 
   configure do
@@ -9,24 +12,12 @@ class App < Sinatra::Base
     set(:bind, "0.0.0.0")
   end
 
-  get("/") do
-    @monitors = DB[
-      <<-SQL
-        SELECT
-          monitors.id,
-          monitors.url,
-          monitors.determine,
-          monitors.completed_at,
-          COUNT(determinations.id) as run_count,
-          MAX(determinations.created_at) as last_run_at
-        FROM monitors
-        LEFT JOIN determinations ON monitors.id = determinations.monitor_id
-        GROUP BY 1, 2, 3, 4
-        ORDER BY 4 DESC NULLS FIRST
-      SQL
-    ]
-      .all
+  use(Rack::Auth::Basic) do |u, p|
+    secure_compare(u, ENV.fetch("USERNAME", "")) && secure_compare(p, ENV.fetch("PASSWORD", ""))
+  end
 
+  get("/") do
+    @monitors = Check.get_all
     erb(:index)
   end
 
@@ -53,6 +44,24 @@ class App < Sinatra::Base
       .all
 
     erb(:monitor)
+  end
+
+  get("/monitors.new") do
+    erb(:new_monitor)
+  end
+
+  post("/monitors") do
+    monitor = DB[:monitors]
+      .returning
+      .insert(
+        determine: params[:determine],
+        url: params[:url]
+      )
+      .first
+
+    Check.run!(monitor)
+
+    redirect("/monitors/#{monitor[:id]}")
   end
 
   post("/monitors/:id/run") do
