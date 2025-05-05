@@ -5,15 +5,24 @@ require "sinatra"
 class App < Sinatra::Base
   extend(ActiveSupport::SecurityUtils)
 
-  helpers(ActionView::Helpers::DateHelper)
-
   configure do
     set(:port, ENV.fetch("PORT", 3858))
     set(:bind, "0.0.0.0")
   end
 
-  use(Rack::Auth::Basic) do |u, p|
-    secure_compare(u, ENV.fetch("USERNAME", "")) && secure_compare(p, ENV.fetch("PASSWORD", ""))
+  helpers(ActionView::Helpers::DateHelper)
+
+  helpers do
+    def protected!
+      auth = Rack::Auth::Basic::Request.new(request.env)
+      unless auth.provided? &&
+          auth.basic? &&
+          secure_compare(auth.credentials[0], ENV.fetch("USERNAME", "")) &&
+          secure_compare(auth.credentials[1], ENV.fetch("PASSWORD", ""))
+        response["WWW-Authenticate"] = "Basic realm=\"Restricted Area\""
+        halt(401, "Not authorized\n")
+      end
+    end
   end
 
   get("/") do
@@ -47,10 +56,13 @@ class App < Sinatra::Base
   end
 
   get("/monitors.new") do
+    protected!
     erb(:new_monitor)
   end
 
   post("/monitors") do
+    protected!
+
     monitor = DB[:monitors]
       .returning
       .insert(
@@ -65,6 +77,8 @@ class App < Sinatra::Base
   end
 
   post("/monitors/:id/run") do
+    protected!
+
     monitor = DB[
       <<-SQL,
         SELECT *
