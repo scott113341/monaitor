@@ -1,0 +1,12 @@
+name: 4
+operations:
+  - alter_column:
+      table: runs
+      column: monitor_id
+      references:
+        name: fk_monitor_id
+        table: monitors
+        column: id
+        on_delete: CASCADE
+      up: monitor_id
+      down: monitor_id
