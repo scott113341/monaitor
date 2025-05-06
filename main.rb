@@ -1,4 +1,5 @@
 require "active_support/all"
+require "dotenv/load"
 require "ruby_llm"
 require "rushover"
 require "sequel"

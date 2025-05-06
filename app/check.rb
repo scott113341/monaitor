@@ -20,32 +20,48 @@ class Check
       .all
   end
 
-  def self.run!(monitor)
+  def self.determine(monitor)
     chat = RubyLLM.chat
 
     url = "https://r.jina.ai/" + monitor[:url]
     screenshot_url_res = HTTP.headers("x-respond-with" => "screenshot").get(url)
     screenshot_url = screenshot_url_res.body.to_s.strip
     puts(screenshot_url)
-    screenshot = HTTP.get(screenshot_url)
+    screenshot_data = HTTP.get(screenshot_url).body.to_s
 
     response = chat.ask(
-      "Given the following screenshot of a webpage, determine #{monitor[:determine]}. Keep your reasoning brief. The very last thing you should output is 'true' or 'false', depending on your determination.",
+      "Given the following screenshot of a webpage, determine #{monitor[:determine]}. Keep your reasoning brief. The very last thing you should output is your 'Determination: true' or 'Determination: false', with that exact formatting.",
       with: {
         image: screenshot_url
       }
     )
 
-    pp(response)
     puts("\n\n\n")
-    puts(response.content)
+    pp(response)
 
-    outcome = response.content.strip.split.last.downcase == "true"
+    outcome_word = response.content.strip.split.last
+    outcome = begin
+      case outcome_word
+      when /true/i
+        true
+      when /false/i
+        false
+      else
+        puts("Unknown outcome: '#{outcome_word}'")
+        false
+      end
+    end
+
+    [outcome, screenshot_data, response]
+  end
+
+  def self.run!(monitor)
+    outcome, screenshot_data, response = determine(monitor)
 
     DB[:determinations].insert(
       monitor_id: monitor[:id],
       outcome:,
-      screenshot: Sequel::SQL::Blob.new(screenshot.body.to_s),
+      screenshot: Sequel::SQL::Blob.new(screenshot_data),
       debug_info: response.to_h.to_json
     )
 

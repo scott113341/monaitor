@@ -30,6 +30,7 @@ GEM
     connection_pool (2.5.3)
     crass (1.0.6)
     domain_name (0.6.20240107)
+    dotenv (3.1.8)
     drb (2.2.1)
     erubi (1.13.1)
     event_stream_parser (1.0.0)
@@ -143,6 +144,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (~> 8.0)
   activesupport (~> 8.0)
+  dotenv (~> 3.1)
   http (~> 5.2)
   pg (~> 1.5)
   puma (~> 6.6)

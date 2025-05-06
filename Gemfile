@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 gem "actionview", "~> 8.0"
 gem "activesupport", "~> 8.0"
+gem "dotenv", "~> 3.1"
 gem "http", "~> 5.2"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.6"
