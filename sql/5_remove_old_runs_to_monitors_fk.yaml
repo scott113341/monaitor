@@ -1,0 +1,9 @@
+name: 5
+operations:
+  - drop_multicolumn_constraint:
+      table: runs
+      name: fk_users_id
+      up:
+        monitor_id: monitor_id
+      down:
+        monitor_id: monitor_id
