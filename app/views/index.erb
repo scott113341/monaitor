@@ -15,7 +15,7 @@
       <td>Determine <a href="<%= monitor[:url] %>" target="_blank"><%= monitor[:determine] %></a>.</td>
       <td>
         <span>
-          <%= "Last run #{time_ago_in_words(monitor[:last_run_at])} ago" if monitor[:last_run_at].present? %>
+          <%= monitor[:last_run_at].present? ? "Last run #{time_ago_in_words(monitor[:last_run_at])} ago" : "No runs yet" %>
         </span>
         <br>
         <a href="/monitors/<%= monitor[:id] %>">
