@@ -1,15 +1,16 @@
 <form method="POST" action="/monitors">
   <div>
-    <input type="url" id="url" name="url" placeholder="URL to monitor" required>
+    <input type="url" id="url" name="url" placeholder="URL to monitor" required style="width: 100%; box-sizing: border-box" />
   </div>
 
   <div>
     <p style="line-height: 39px">
-      Determine <input style="display: inline-block" type="text" id="determine" name="determine" value="whether " required>
+      Determine...
+      <textarea style="display: inline-block; vertical-align: middle" id="determine" name="determine" required>whether </textarea>
     </p>
   </div>
 
   <div>
-    <button type="submit">Create Monitor</button>
+    <button type="submit">Create monitor</button>
   </div>
 </form>
