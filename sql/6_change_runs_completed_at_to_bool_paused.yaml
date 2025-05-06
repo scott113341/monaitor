@@ -1,0 +1,14 @@
+name: 6
+operations:
+  - add_column:
+      table: monitors
+      up: completed_at is not null
+      column:
+        name: paused
+        type: boolean
+        nullable: false
+        default: "false"
+  - drop_column:
+      table: monitors
+      column: completed_at
+      down: null

@@ -9,7 +9,7 @@ loader = Zeitwerk::Loader.new
 loader.push_dir(File.join(__dir__, "app"))
 loader.setup
 
-DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_5")
+DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_6")
 DB.extension(:pg_json)
 
 PUSHOVER_API_TOKEN = ENV.fetch("PUSHOVER_API_TOKEN")
@@ -26,7 +26,7 @@ if __FILE__ == $PROGRAM_NAME
     loop do
       begin
         Check.get_all.each do |monitor|
-          next if monitor[:completed_at].present?
+          next if monitor[:paused]
           next if (monitor[:last_run_at] || Time.at(0)) > Time.now.utc - 8.hours
 
           sleep(1.minute + rand(10.seconds))

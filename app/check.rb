@@ -8,7 +8,7 @@ class Check
           monitors.id,
           monitors.url,
           monitors.determine,
-          monitors.completed_at,
+          monitors.paused,
           COUNT(runs.id) as run_count,
           MAX(runs.created_at) as last_run_at
         FROM monitors
@@ -67,6 +67,7 @@ class Check
 
     if outcome
       PUSHOVER.notify(response.content.strip, url: monitor[:url])
+      # DB[:monitors].where(id: monitor[:id]).update(paused: true)
     end
   end
 end

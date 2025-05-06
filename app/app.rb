@@ -76,20 +76,18 @@ class App < Sinatra::Base
     redirect("/monitors/#{monitor[:id]}")
   end
 
-  post("/monitors/:id/run") do
+  post("/monitors/:id/action") do
     protected!
 
-    monitor = DB[
-      <<-SQL,
-        SELECT *
-        FROM monitors
-        WHERE monitors.id = ?
-      SQL
-      params[:id]
-    ]
-      .first
-
-    Check.run!(monitor)
+    case params[:action]
+    when "run"
+      monitor = DB[:monitors].where(id: params[:id]).first
+      Check.run!(monitor)
+    when "pause"
+      DB[:monitors].where(id: params[:id]).update(paused: true)
+    when "resume"
+      DB[:monitors].where(id: params[:id]).update(paused: false)
+    end
 
     redirect("/monitors/#{params[:id]}")
   end

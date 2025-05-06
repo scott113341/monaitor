@@ -1,9 +1,30 @@
-<h1>Determine <%= @monitor[:determine] %></h1>
-<p>URL: <a href="<%= @monitor[:url] %>" target="_blank"><%= @monitor[:url] %></a></p>
+<% if @monitor[:paused] %>
+  <div style="background-color: #fff3e0; padding: 10px; border: 1px solid #ffe0b2; border-radius: 4px;">
+    This monitor is paused.
+  </div>
+<% end %>
 
-<form method="post" action="/monitors/<%= @monitor[:id] %>/run">
-  <button type="submit">Run now</button>
-</form>
+<h1>Determine <%= @monitor[:determine] %></h1>
+
+<h3><a href="<%= @monitor[:url] %>" target="_blank"><%= @monitor[:url] %></a></h3>
+
+<br>
+
+<div style="display: flex; gap: 10px;">
+  <form method="post" action="/monitors/<%= @monitor[:id] %>/action">
+    <button name="action" value="run" type="submit" style="background-color: #c2f3bb;">Run now</button>
+  </form>
+
+  <% if @monitor[:paused] %>
+    <form method="post" action="/monitors/<%= @monitor[:id] %>/action">
+      <button name="action" value="resume" type="submit" style="background-color: #b2dfff;">Resume</button>
+    </form>
+  <% else %>
+    <form method="post" action="/monitors/<%= @monitor[:id] %>/action">
+      <button name="action" value="pause" type="submit" style="background-color: #ffe0b2;">Pause</button>
+    </form>
+  <% end %>
+</div>
 
 <% if @runs.empty? %>
   <p>No runs yet.</p>
