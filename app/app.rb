@@ -93,16 +93,7 @@ class App < Sinatra::Base
   end
 
   get("/runs/:id/screenshot") do
-    run = DB[
-      <<-SQL,
-        SELECT screenshot
-        FROM runs
-        WHERE id = ?
-      SQL
-      params[:id]
-    ].first
-
     content_type("image/png")
-    run[:screenshot]
+    DB[:runs].where(id: params[:id]).first[:screenshot]
   end
 end

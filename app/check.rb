@@ -14,7 +14,7 @@ class Check
         FROM monitors
         LEFT JOIN runs ON monitors.id = runs.monitor_id
         GROUP BY 1, 2, 3, 4
-        ORDER BY 4 DESC NULLS FIRST, 3
+        ORDER BY 4, 3
       SQL
     ]
       .all
