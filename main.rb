@@ -37,6 +37,8 @@ if __FILE__ == $PROGRAM_NAME
       rescue StandardError => e
         puts("Error: #{e.message}")
       end
+
+      sleep(1.minute)
     end
   end
 
