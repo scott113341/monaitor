@@ -9,10 +9,10 @@ class Check
           monitors.url,
           monitors.determine,
           monitors.completed_at,
-          COUNT(determinations.id) as run_count,
-          MAX(determinations.created_at) as last_run_at
+          COUNT(runs.id) as run_count,
+          MAX(runs.created_at) as last_run_at
         FROM monitors
-        LEFT JOIN determinations ON monitors.id = determinations.monitor_id
+        LEFT JOIN runs ON monitors.id = runs.monitor_id
         GROUP BY 1, 2, 3, 4
         ORDER BY 4 DESC NULLS FIRST
       SQL
@@ -58,7 +58,7 @@ class Check
   def self.run!(monitor)
     outcome, screenshot_data, response = determine(monitor)
 
-    DB[:determinations].insert(
+    DB[:runs].insert(
       monitor_id: monitor[:id],
       outcome:,
       screenshot: Sequel::SQL::Blob.new(screenshot_data),

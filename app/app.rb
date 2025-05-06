@@ -41,10 +41,10 @@ class App < Sinatra::Base
     ]
       .first
 
-    @determinations = DB[
+    @runs = DB[
       <<-SQL,
         SELECT *
-        FROM determinations
+        FROM runs
         WHERE monitor_id = ?
         ORDER BY created_at DESC
       SQL
@@ -94,18 +94,17 @@ class App < Sinatra::Base
     redirect("/monitors/#{params[:id]}")
   end
 
-  get("/determinations/:id/screenshot") do
-    determination = DB[
+  get("/runs/:id/screenshot") do
+    run = DB[
       <<-SQL,
         SELECT screenshot
-        FROM determinations
+        FROM runs
         WHERE id = ?
       SQL
       params[:id]
-    ]
-      .first
+    ].first
 
     content_type("image/png")
-    determination[:screenshot]
+    run[:screenshot]
   end
 end

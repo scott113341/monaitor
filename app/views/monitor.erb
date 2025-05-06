@@ -5,8 +5,8 @@
   <button type="submit">Run now</button>
 </form>
 
-<% if @determinations.empty? %>
-  <p>No determinations yet.</p>
+<% if @runs.empty? %>
+  <p>No runs yet.</p>
 <% else %>
   <table>
     <thead>
@@ -19,25 +19,25 @@
     </tr>
     </thead>
     <tbody>
-    <% @determinations.each do |determination| %>
+    <% @runs.each do |run| %>
       <tr>
         <td>
-          <span title="<%= determination[:created_at] %>">
-            <%= "#{time_ago_in_words(determination[:created_at])} ago" %>
+          <span title="<%= run[:created_at] %>">
+            <%= "#{time_ago_in_words(run[:created_at])} ago" %>
           </span>
         </td>
-        <td><%= determination[:outcome] %></td>
+        <td><%= run[:outcome] %></td>
         <td>
-          In: <%= determination[:debug_info]["input_tokens"] %>
+          In: <%= run[:debug_info]["input_tokens"] %>
           <br>
-          Out: <%= determination[:debug_info]["output_tokens"] %>
+          Out: <%= run[:debug_info]["output_tokens"] %>
           <br>
-          Cost: $<%= sprintf('%.5f', (determination[:debug_info]["input_tokens"] * 0.10 + determination[:debug_info]["output_tokens"] * 0.40) / 1_000_000) %>
+          Cost: $<%= sprintf('%.5f', (run[:debug_info]["input_tokens"] * 0.10 + run[:debug_info]["output_tokens"] * 0.40) / 1_000_000) %>
         </td>
-        <td style="white-space: pre-line"><%= determination[:debug_info]["content"] %></td>
+        <td style="white-space: pre-line"><%= run[:debug_info]["content"] %></td>
         <td>
-          <a href="/determinations/<%= determination[:id] %>/screenshot" target="_blank">
-            <img src="/determinations/<%= determination[:id] %>/screenshot" width="200" alt="Screenshot">
+          <a href="/runs/<%= run[:id] %>/screenshot" target="_blank">
+            <img src="/runs/<%= run[:id] %>/screenshot" width="200" alt="Screenshot">
           </a>
         </td>
       </tr>
