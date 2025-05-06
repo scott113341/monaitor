@@ -26,11 +26,10 @@ if __FILE__ == $PROGRAM_NAME
     loop do
       begin
         Check.get_all.each do |monitor|
-          sleep(1.minute + rand(10.seconds))
-
           next if monitor[:completed_at].present?
           next if (monitor[:last_run_at] || Time.at(0)) > Time.now.utc - 8.hours
 
+          sleep(1.minute + rand(10.seconds))
           puts("Running #{monitor[:id]}")
           Check.run!(monitor)
         end
