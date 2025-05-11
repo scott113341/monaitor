@@ -44,7 +44,7 @@
       <tr>
         <td>
           <span title="<%= run[:created_at] %>">
-            <%= "#{time_ago_in_words(run[:created_at])} ago" %>
+            <%= "#{time_ago_in_words(run[:created_at]).capitalize} ago" %>
           </span>
 
           <br>
@@ -79,7 +79,7 @@
       <div style="border-top: 1px solid black; padding: 10px 0; margin: 10px 0;">
         <div>
           <span title="<%= run[:created_at] %>">
-            <%= "#{time_ago_in_words(run[:created_at])} ago" %>
+            <%= "#{time_ago_in_words(run[:created_at]).capitalize} ago" %>
           </span>
           <br>
           <span style="color: <%= run[:outcome] ? '#4caf50' : '#f44336' %>; font-family: monospace">
