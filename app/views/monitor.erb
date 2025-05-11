@@ -12,7 +12,9 @@
 
 <div style="display: flex; gap: 10px;">
   <form method="post" action="/monitors/<%= @monitor[:id] %>/action">
-    <button name="action" value="run" type="submit" style="background-color: #c2f3bb;">Run now</button>
+    <button name="action" value="run" type="submit" style="background-color: #c2f3bb;">
+      Run now
+    </button>
   </form>
 
   <% if @monitor[:paused] %>
@@ -29,14 +31,12 @@
 <% if @runs.empty? %>
   <p>No runs yet.</p>
 <% else %>
-  <table>
+  <table class="desktop">
     <thead>
     <tr>
-      <th>When</th>
-      <th>Determination</th>
-      <th>Usage</th>
+      <th style="width: 200px">Run</th>
       <th>Rationale</th>
-      <th>Screenshot</th>
+      <th style="width: 200px">Screenshot</th>
     </tr>
     </thead>
     <tbody>
@@ -46,14 +46,22 @@
           <span title="<%= run[:created_at] %>">
             <%= "#{time_ago_in_words(run[:created_at])} ago" %>
           </span>
-        </td>
-        <td><%= run[:outcome] %></td>
-        <td>
-          In: <%= run[:debug_info]["input_tokens"] %>
+
           <br>
-          Out: <%= run[:debug_info]["output_tokens"] %>
+
+          <span style="color: <%= run[:outcome] ? '#4caf50' : '#f44336' %>; font-family: monospace">
+            <%= run[:outcome] ? 'true' : 'false' %>
+          </span>
+
           <br>
-          Cost: $<%= sprintf('%.5f', (run[:debug_info]["input_tokens"] * 0.10 + run[:debug_info]["output_tokens"] * 0.40) / 1_000_000) %>
+
+          Tokens in/out:
+          <%= run[:debug_info]["input_tokens"] %> / <%= run[:debug_info]["output_tokens"] %>
+
+          <br>
+
+          Cost:
+          $<%= sprintf('%.5f', (run[:debug_info]["input_tokens"] * 0.10 + run[:debug_info]["output_tokens"] * 0.40) / 1_000_000) %>
         </td>
         <td style="white-space: pre-line"><%= run[:debug_info]["content"] %></td>
         <td>
@@ -65,4 +73,34 @@
     <% end %>
     </tbody>
   </table>
+
+  <div class="mobile">
+    <% @runs.each do |run| %>
+      <div style="border-top: 1px solid black; padding: 10px 0; margin: 10px 0;">
+        <div>
+          <span title="<%= run[:created_at] %>">
+            <%= "#{time_ago_in_words(run[:created_at])} ago" %>
+          </span>
+          <br>
+          <span style="color: <%= run[:outcome] ? '#4caf50' : '#f44336' %>; font-family: monospace">
+            <%= run[:outcome] ? 'true' : 'false' %>
+          </span>
+          <br>
+          Tokens in/out:
+          <%= run[:debug_info]["input_tokens"] %> / <%= run[:debug_info]["output_tokens"] %>
+          <br>
+          Cost:
+          $<%= sprintf('%.5f', (run[:debug_info]["input_tokens"] * 0.10 + run[:debug_info]["output_tokens"] * 0.40) / 1_000_000) %>
+        </div>
+
+        <div style="margin: 10px 0;">
+          <a href="/runs/<%= run[:id] %>/screenshot" target="_blank">
+            <img src="/runs/<%= run[:id] %>/screenshot" width="100%" alt="Screenshot">
+          </a>
+        </div>
+
+        <div style="white-space: pre-line"><%= run[:debug_info]["content"] %></div>
+      </div>
+    <% end %>
+  </div>
 <% end %>
