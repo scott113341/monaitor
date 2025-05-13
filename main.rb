@@ -5,6 +5,13 @@ require "rushover"
 require "sequel"
 require "zeitwerk"
 
+Thread.new do
+  loop do
+    puts(GC.stat.to_json)
+    sleep(1.minute)
+  end
+end
+
 loader = Zeitwerk::Loader.new
 loader.push_dir(File.join(__dir__, "app"))
 loader.setup
