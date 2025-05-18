@@ -9,7 +9,7 @@ jobs:
   build-deploy:
     uses: scott113341/workflows/.github/workflows/build-deploy.yaml@main
     with:
-      registry: personal-zot-registry.fly.dev
+      registry: registry.they.industries
       repository: monaitor
     secrets:
       registry-user: ${{ secrets.REGISTRY_USER }}
