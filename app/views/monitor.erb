@@ -40,7 +40,7 @@
     </tr>
     </thead>
     <tbody>
-    <% @runs.each do |run| %>
+    <% @runs.each_with_index do |run, idx| %>
       <tr>
         <td>
           <span title="<%= run[:created_at] %>">
@@ -66,7 +66,12 @@
         <td style="white-space: pre-line"><%= run[:debug_info]["content"] %></td>
         <td>
           <a href="/runs/<%= run[:id] %>/screenshot" target="_blank">
-            <img src="/runs/<%= run[:id] %>/screenshot" width="200" alt="Screenshot">
+            <img
+              src="/runs/<%= run[:id] %>/screenshot"
+              width="200"
+              alt="Screenshot"
+              loading="<%= idx < 10 ? "eager" : "lazy" %>"
+            />
           </a>
         </td>
       </tr>
