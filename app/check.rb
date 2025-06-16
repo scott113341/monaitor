@@ -31,9 +31,7 @@ class Check
 
     response = chat.ask(
       "Given the following screenshot of a webpage, determine #{monitor[:determine]}. Keep your reasoning brief. The very last thing you should output is your 'Determination: true' or 'Determination: false', with that exact formatting.",
-      with: {
-        image: screenshot_url
-      }
+      with: screenshot_url
     )
 
     puts("\n\n\n")
