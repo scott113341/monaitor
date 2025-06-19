@@ -2,6 +2,8 @@
 
 source "https://rubygems.org"
 
+ruby file: ".ruby-version"
+
 gem "actionview", "~> 8.0"
 gem "activesupport", "~> 8.0"
 gem "dotenv", "~> 3.1"
