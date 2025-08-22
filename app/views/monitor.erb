@@ -8,6 +8,10 @@
 
 <h3><a href="<%= @monitor[:url] %>" target="_blank"><%= @monitor[:url] %></a></h3>
 
+<% if @monitor[:extra_instructions].present? %>
+  <p><em><%= @monitor[:extra_instructions] %></em></p>
+<% end %>
+
 <br>
 
 <div style="display: flex; gap: 10px;">

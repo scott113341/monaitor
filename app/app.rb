@@ -67,7 +67,8 @@ class App < Sinatra::Base
       .returning
       .insert(
         determine: params[:determine],
-        url: params[:url]
+        url: params[:url],
+        extra_instructions: params[:extra_instructions]
       )
       .first
 

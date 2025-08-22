@@ -29,8 +29,12 @@ class Check
     puts(screenshot_url)
     screenshot_data = HTTP.get(screenshot_url).body.to_s
 
+    prompt = "Given the following screenshot of a webpage, determine #{monitor[:determine]}."
+    prompt += monitor[:extra_instructions] if monitor[:extra_instructions].present?
+    prompt += " Keep your reasoning brief. The very last thing you should output is 'Determination: true' or 'Determination: false', with that exact formatting."
+
     response = chat.ask(
-      "Given the following screenshot of a webpage, determine #{monitor[:determine]}. Keep your reasoning brief. The very last thing you should output is your 'Determination: true' or 'Determination: false', with that exact formatting.",
+      prompt,
       with: screenshot_url
     )
 
