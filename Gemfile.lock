@@ -115,7 +115,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.6.2)
+    ruby_llm (1.6.4)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
