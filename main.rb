@@ -27,16 +27,13 @@ end
 if __FILE__ == $PROGRAM_NAME
   Thread.new do
     loop do
-      begin
-        Check.get_all.each do |monitor|
-          next if monitor[:paused]
-          next if (monitor[:last_run_at] || Time.at(0)) > Time.now.utc - 8.hours
+      Check.get_all.each do |monitor|
+        next if monitor[:paused]
+        next if (monitor[:last_run_at] || Time.at(0)) > Time.now.utc - 8.hours
 
-          sleep(1.minute + rand(10.seconds))
-          puts("Running #{monitor[:id]}")
-          Check.run!(monitor)
-        end
-
+        sleep(1.minute + rand(10.seconds))
+        puts("Running #{monitor[:id]}")
+        Check.run!(monitor)
       rescue StandardError => e
         puts("Error: #{e.message}")
       end
