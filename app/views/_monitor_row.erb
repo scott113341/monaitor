@@ -1,0 +1,12 @@
+<tr>
+  <td>
+    Determine <a href="<%= monitor[:url] %>" target="_blank"><%= monitor[:determine] %></a>.
+  </td>
+  <td>
+    <a href="/monitors/<%= monitor[:id] %>">
+      <%= monitor[:last_run_at].present? ? "Last run #{time_ago_in_words(monitor[:last_run_at])} ago" : "No runs yet" %>
+    </a>
+    <br>
+    <%= "#{monitor[:run_count]} #{"run".pluralize(monitor[:run_count])}" %>
+  </td>
+</tr>

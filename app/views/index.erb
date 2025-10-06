@@ -11,20 +11,26 @@
   </thead>
   <tbody>
   <% @monitors.each do |monitor| %>
-    <tr>
-      <td>Determine <a href="<%= monitor[:url] %>" target="_blank"><%= monitor[:determine] %></a>.</td>
-      <td>
-        <a href="/monitors/<%= monitor[:id] %>">
-          <% if monitor[:paused] %>
-            Paused
-          <% else %>
-            <%= monitor[:last_run_at].present? ? "Last run #{time_ago_in_words(monitor[:last_run_at])} ago" : "No runs yet" %>
-          <% end %>
-        </a>
-        <br>
-        <%= "#{monitor[:run_count]} #{"run".pluralize(monitor[:run_count])}" %>
-      </td>
-    </tr>
+    <%= erb :_monitor_row, locals: { monitor: monitor } %>
   <% end %>
   </tbody>
 </table>
+
+<% if @paused_monitors.any? %>
+  <br>
+  <br>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Paused Monitor</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @paused_monitors.each do |monitor| %>
+      <%= erb :_monitor_row, locals: { monitor: monitor } %>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

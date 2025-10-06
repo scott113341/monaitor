@@ -26,7 +26,9 @@ class App < Sinatra::Base
   end
 
   get("/") do
-    @monitors = Check.get_all
+    monitors = Check.get_all
+    @monitors = monitors.select { |m| !m[:paused] }
+    @paused_monitors = monitors.select { |m| m[:paused] }
     erb(:index)
   end
 
