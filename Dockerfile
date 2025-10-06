@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package.json package-lock.json ./
 RUN npm install
-RUN npx playwright install --with-deps
+RUN npx playwright install --with-deps --only-shell chromium
 
 COPY Gemfile Gemfile.lock .ruby-version ./
 RUN bundle install
