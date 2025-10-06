@@ -43,7 +43,7 @@ class App < Sinatra::Base
 
     @runs = DB[
       <<-SQL,
-        SELECT id, created_at, debug_info, outcome
+        SELECT id, created_at, debug_info, outcome, reasoning
         FROM runs
         WHERE monitor_id = ?
         ORDER BY created_at DESC

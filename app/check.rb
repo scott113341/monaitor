@@ -1,6 +1,16 @@
-require "http"
-
 class Check
+  class DeterminationSchema < RubyLLM::Schema
+    string(
+      :reasoning,
+      description: "Some brief plaintext reasoning for your determination"
+    )
+
+    boolean(
+      :determination,
+      description: "Your final determination"
+    )
+  end
+
   def self.get_all
     DB[
       <<-SQL
@@ -21,55 +31,71 @@ class Check
   end
 
   def self.determine(monitor)
-    chat = RubyLLM.chat
+    screenshot, text = fetch_page(monitor[:url])
+    screenshot_file = save_temp_file("screenshot", "png", screenshot)
+    text_file = save_temp_file("body", "txt", text)
 
-    url = "https://r.jina.ai/" + monitor[:url]
-    screenshot_url_res = HTTP.headers("x-respond-with" => "screenshot").get(url)
-    screenshot_url = screenshot_url_res.body.to_s.strip
-    puts(screenshot_url)
-    screenshot_data = HTTP.get(screenshot_url).body.to_s
+    chat = RubyLLM.chat.with_schema(DeterminationSchema)
 
-    prompt = "Given the following screenshot of a webpage, determine #{monitor[:determine]}."
-    prompt += monitor[:extra_instructions] if monitor[:extra_instructions].present?
-    prompt += " Keep your reasoning brief. The very last thing you should output is 'Determination: true' or 'Determination: false', with that exact formatting."
+    prompt = "Given this webpage screenshot & body.innerText, determine #{monitor[:determine]}."
+    prompt += " " + monitor[:extra_instructions] if monitor[:extra_instructions].present?
 
     response = chat.ask(
       prompt,
-      with: screenshot_url
+      with: [
+        screenshot_file.path,
+        text_file.path
+      ]
     )
-
-    puts("\n\n\n")
     pp(response)
 
-    outcome_word = response.content.strip.split.last
-    outcome = begin
-      case outcome_word
-      when /true/i
-        true
-      when /false/i
-        false
-      else
-        puts("Unknown outcome: '#{outcome_word}'")
-        false
-      end
-    end
-
-    [outcome, screenshot_data, response]
+    outcome = response.content["determination"]
+    [outcome, screenshot, response]
   end
 
   def self.run!(monitor)
-    outcome, screenshot_data, response = determine(monitor)
+    outcome, screenshot, response = determine(monitor)
 
     DB[:runs].insert(
       monitor_id: monitor[:id],
       outcome:,
-      screenshot: Sequel::SQL::Blob.new(screenshot_data),
+      reasoning: response.content["reasoning"],
+      screenshot: Sequel::SQL::Blob.new(screenshot),
       debug_info: response.to_h.to_json
     )
 
     if outcome
-      PUSHOVER.notify(response.content.strip, url: monitor[:url])
+      PUSHOVER.notify(response.content["reasoning"], url: monitor[:url])
       # DB[:monitors].where(id: monitor[:id]).update(paused: true)
     end
+  end
+
+  def self.with_page(&block)
+    playwright_cli_executable_path = "./node_modules/.bin/playwright"
+
+    Playwright.create(playwright_cli_executable_path:) do |playwright|
+      playwright.chromium.launch do |browser|
+        block.call(browser.new_page)
+      end
+    end
+  end
+
+  def self.fetch_page(url)
+    with_page do |page|
+      page.goto(url)
+
+      screenshot = page.screenshot(fullPage: true)
+      text = page.evaluate("document.body.innerText")
+
+      [screenshot, text]
+    end
+  end
+
+  def self.save_temp_file(name, extension, data)
+    file = Tempfile.new([name, "." + extension])
+    file.write(data)
+    file.flush
+    file.rewind
+    file
   end
 end

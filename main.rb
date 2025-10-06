@@ -1,6 +1,8 @@
 require "active_support/all"
 require "dotenv/load"
+require "playwright"
 require "ruby_llm"
+require "ruby_llm/schema"
 require "rushover"
 require "sequel"
 require "zeitwerk"
@@ -9,7 +11,7 @@ loader = Zeitwerk::Loader.new
 loader.push_dir(File.join(__dir__, "app"))
 loader.setup
 
-DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_7")
+DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_8")
 DB.extension(:pg_json)
 
 PUSHOVER_API_TOKEN = ENV.fetch("PUSHOVER_API_TOKEN")
@@ -17,8 +19,8 @@ PUSHOVER_USER_KEY = ENV.fetch("PUSHOVER_USER_KEY")
 PUSHOVER = Rushover::User.new(PUSHOVER_USER_KEY, Rushover::Client.new(PUSHOVER_API_TOKEN))
 
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch("OPENAI_API_KEY")
-  config.default_model = "gpt-4.1-nano"
+  config.openrouter_api_key = ENV.fetch("OPENROUTER_API_KEY")
+  config.default_model = "mistralai/mistral-small-3.1-24b-instruct:free"
 end
 
 if __FILE__ == $PROGRAM_NAME
