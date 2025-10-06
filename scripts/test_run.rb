@@ -1,6 +1,6 @@
 require_relative "../main"
 
-monitor = DB[:monitors].where(id: "c2d12ead-72fe-4eff-b7f8-6726f1ff51bc").first
+monitor = DB[:monitors].where(id: "8cb50a0b-ded5-4056-a9e7-bc6afed7fb2e").first
 
 pp(monitor)
 
@@ -8,10 +8,9 @@ outcomes = []
 responses = []
 
 10.times do
-  check = Check.determine(monitor)
-  outcomes.push(check[0])
-  responses.push(check[2])
-  sleep(21.seconds)
+  outcome, screenshot, response = Check.determine(monitor)
+  outcomes.push(outcome)
+  responses.push(response)
 end
 
 pp(responses)

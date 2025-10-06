@@ -40,6 +40,7 @@ class Check
     prompt = "Given this webpage screenshot & body.innerText, determine #{monitor[:determine]}."
     prompt += " " + monitor[:extra_instructions] if monitor[:extra_instructions].present?
 
+    puts("Calling LLM...")
     response = chat.ask(
       prompt,
       with: [
@@ -74,17 +75,21 @@ class Check
     playwright_cli_executable_path = "./node_modules/.bin/playwright"
 
     Playwright.create(playwright_cli_executable_path:) do |playwright|
-      playwright.chromium.launch do |browser|
-        block.call(browser.new_page)
+      playwright.chromium.launch(headless: true) do |browser|
+        page = browser.new_page(viewport: {width: 800, height: 2400})
+        block.call(page)
       end
     end
   end
 
   def self.fetch_page(url)
-    with_page do |page|
-      page.goto(url)
+    puts("Fetching #{url}")
 
-      screenshot = page.screenshot(fullPage: true)
+    with_page do |page|
+      page.goto(url, waitUntil: "commit")
+      sleep(5)
+
+      screenshot = page.screenshot
       text = page.evaluate("document.body.innerText")
 
       [screenshot, text]
