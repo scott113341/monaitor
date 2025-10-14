@@ -1,6 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "bundler"
+    versioning-strategy: "increase"
     directory: "/"
     schedule:
       interval: "weekly"
@@ -17,6 +18,7 @@ updates:
       day: "monday"
       time: "10:00"
   - package-ecosystem: "npm"
+    versioning-strategy: "increase"
     directory: "/"
     schedule:
       interval: "weekly"
