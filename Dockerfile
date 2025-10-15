@@ -25,5 +25,5 @@ RUN bundle install
 COPY ./ ./
 
 # The empty CMD allows for arguments to be added
-ENTRYPOINT ["ruby", "main.rb"]
+ENTRYPOINT ["bundle", "exec", "ruby", "main.rb"]
 CMD []
