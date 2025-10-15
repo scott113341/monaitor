@@ -1,4 +1,3 @@
-name: 2_create_tables
 operations:
   - create_table:
       name: monitors

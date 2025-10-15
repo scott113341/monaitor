@@ -1,0 +1,35 @@
+version_schema: 9
+operations:
+  # Model
+  - add_column:
+      table: monitors
+      up: "'mistralai/mistral-small-3.1-24b-instruct:free'"
+      column:
+        name: model
+        type: text
+        nullable: false
+  - add_column:
+      table: runs
+      up: "'unknown'"
+      column:
+        name: model
+        type: text
+        nullable: false
+
+  # Cost
+  - add_column:
+      table: runs
+      up: "0.0"
+      column:
+        name: cost
+        type: float
+        nullable: false
+
+  # Interval
+  - add_column:
+      table: monitors
+      up: "'8 hours'"
+      column:
+        name: run_interval
+        type: interval
+        nullable: false

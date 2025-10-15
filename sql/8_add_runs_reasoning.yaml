@@ -1,9 +1,0 @@
-name: 8
-operations:
-  - add_column:
-      table: runs
-      up: "coalesce(debug_info #>> '{content, reasoning}', debug_info #>> '{content}')"
-      column:
-        name: reasoning
-        type: text
-        nullable: false

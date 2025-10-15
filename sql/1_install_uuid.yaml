@@ -1,4 +1,3 @@
-name: 1_install_uuid
 operations:
   - sql:
       up: CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
