@@ -19,11 +19,13 @@ class Check
           monitors.url,
           monitors.determine,
           monitors.paused,
+          monitors.model,
+          monitors.run_interval,
           COUNT(runs.id) as run_count,
           MAX(runs.created_at) as last_run_at
         FROM monitors
         LEFT JOIN runs ON monitors.id = runs.monitor_id
-        GROUP BY 1, 2, 3, 4
+        GROUP BY 1, 2, 3, 4, 5, 6
         ORDER BY 4, 3
       SQL
     ]
@@ -35,7 +37,9 @@ class Check
     screenshot_file = save_temp_file("screenshot", "png", screenshot)
     text_file = save_temp_file("body", "txt", text)
 
-    chat = RubyLLM.chat.with_schema(DeterminationSchema)
+    chat = RubyLLM
+      .chat(model: monitor[:model])
+      .with_schema(DeterminationSchema)
 
     prompt = "Given this webpage screenshot & body.innerText, determine #{monitor[:determine]}."
     prompt += " " + monitor[:extra_instructions] if monitor[:extra_instructions].present?
@@ -51,18 +55,20 @@ class Check
     pp(response)
 
     outcome = response.content["determination"]
-    [outcome, screenshot, response]
+    [outcome, screenshot, response, chat.total_cost]
   end
 
   def self.run!(monitor)
-    outcome, screenshot, response = determine(monitor)
+    outcome, screenshot, response, cost = determine(monitor)
 
     DB[:runs].insert(
       monitor_id: monitor[:id],
       outcome:,
       reasoning: response.content["reasoning"],
       screenshot: Sequel::SQL::Blob.new(screenshot),
-      debug_info: response.to_h.to_json
+      debug_info: response.to_h.to_json,
+      model: monitor[:model],
+      cost:
     )
 
     if outcome

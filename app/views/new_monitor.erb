@@ -5,17 +5,62 @@
 
   <div>
     <p style="line-height: 39px">
-      Determine...
+      <label for="determine">Determine...</label>
       <textarea style="display: inline-block; vertical-align: middle" id="determine" name="determine" required>whether </textarea>
     </p>
   </div>
 
   <div>
     <label for="extra_instructions">Extra instructions (optional):</label>
-    <textarea id="extra_instructions" name="extra_instructions" placeholder="Add any extra context or instructions to help the model decide when things are ambiguous" style="width: 100%; box-sizing: border-box"></textarea>
+    <textarea
+      id="extra_instructions"
+      name="extra_instructions"
+      placeholder="Add any extra context or instructions to help the model decide when things are ambiguous"
+      style="width: 100%; box-sizing: border-box"></textarea>
+  </div>
+
+  <div>
+    <label for="model">Using model:</label>
+    <select id="model" name="model">
+      <option value="mistralai/mistral-small-3.1-24b-instruct:free" selected>mistralai/mistral-small-3.1-24b-instruct:free</option>
+      <option value="openai/gpt-5-nano">openai/gpt-5-nano</option>
+      <option value="other">Other…</option>
+    </select>
+    <div id="custom_model_div" style="display: none; margin-top: 6px;">
+      <input
+        type="text"
+        id="custom_model"
+        name="custom_model"
+        placeholder="OpenRouter model ID"
+        style="width: 100%; box-sizing: border-box"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label for="run_interval">Every:</label>
+    <input
+      type="text"
+      id="run_interval"
+      name="run_interval"
+      value="8 hours"
+      placeholder="How often to run the model"
+      required style="width: 100%; box-sizing: border-box"
+    />
   </div>
 
   <div>
     <button type="submit">Create monitor</button>
   </div>
 </form>
+
+<script>
+  function showHideCustomModelDiv() {
+    const value = document.querySelector('select[name=model]').value;
+    const otherModelDiv = document.getElementById('custom_model_div');
+    otherModelDiv.style.display = value === 'other' ? 'block' : 'none';
+  }
+
+  document.querySelector('select[name=model]').addEventListener('change', showHideCustomModelDiv);
+  document.addEventListener('DOMContentLoaded', showHideCustomModelDiv);
+</script>

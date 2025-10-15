@@ -2,6 +2,7 @@ require "active_support/all"
 require "dotenv/load"
 require "playwright"
 require "ruby_llm"
+require "ruby_llm/cost"
 require "ruby_llm/schema"
 require "rushover"
 require "sequel"
@@ -11,8 +12,8 @@ loader = Zeitwerk::Loader.new
 loader.push_dir(File.join(__dir__, "app"))
 loader.setup
 
-DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_8")
-DB.extension(:pg_json)
+DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_9")
+DB.extension(:pg_json, :pg_interval)
 
 PUSHOVER_API_TOKEN = ENV.fetch("PUSHOVER_API_TOKEN")
 PUSHOVER_USER_KEY = ENV.fetch("PUSHOVER_USER_KEY")
@@ -29,13 +30,13 @@ if __FILE__ == $PROGRAM_NAME
     loop do
       Check.get_all.each do |monitor|
         next if monitor[:paused]
-        next if (monitor[:last_run_at] || Time.at(0)) > Time.now.utc - 8.hours
+        next if (monitor[:last_run_at] || Time.at(0)) > Time.now.utc - monitor[:run_interval]
 
         sleep(1.minute + rand(10.seconds))
         puts("Running #{monitor[:id]}")
         Check.run!(monitor)
       rescue StandardError => e
-        puts("Error: #{e.message}")
+        puts("Error: #{e.message}", e.backtrace)
       end
 
       sleep(1.minute)

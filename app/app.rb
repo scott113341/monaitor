@@ -45,7 +45,7 @@ class App < Sinatra::Base
 
     @runs = DB[
       <<-SQL,
-        SELECT id, created_at, debug_info, outcome, reasoning
+        SELECT id, created_at, debug_info, outcome, reasoning, model, cost
         FROM runs
         WHERE monitor_id = ?
         ORDER BY created_at DESC
@@ -65,12 +65,16 @@ class App < Sinatra::Base
   post("/monitors") do
     protected!
 
+    model = params[:model] == "other" ? params[:custom_model] : params[:model]
+
     monitor = DB[:monitors]
       .returning
       .insert(
-        determine: params[:determine],
         url: params[:url],
-        extra_instructions: params[:extra_instructions]
+        determine: params[:determine].sub(/\.\s*\Z/, ""),
+        extra_instructions: params[:extra_instructions],
+        run_interval: params[:run_interval],
+        model:
       )
       .first
 

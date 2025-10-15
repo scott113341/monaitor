@@ -14,17 +14,28 @@
     object-position: top;
     aspect-ratio: initial;
   }
+
+  .paused {
+    background-color: #fff3e0;
+    padding: 10px;
+    border: 1px solid #ffe0b2;
+    border-radius: 4px;
+  }
 </style>
 
 <% if @monitor[:paused] %>
-  <div style="background-color: #fff3e0; padding: 10px; border: 1px solid #ffe0b2; border-radius: 4px;">
+  <div class="paused">
     This monitor is paused.
   </div>
 <% end %>
 
 <h1>Determine <%= @monitor[:determine] %></h1>
 
-<h3><a href="<%= @monitor[:url] %>" target="_blank"><%= @monitor[:url] %></a></h3>
+<div>
+  <div><strong>URL</strong>: <a href="<%= @monitor[:url] %>" target="_blank"><%= @monitor[:url] %></a></div>
+  <div><strong>Interval</strong>: <%= ActiveSupport::Duration.build(@monitor[:run_interval].to_i).inspect %></div>
+  <div><strong>Model</strong>: <span style="font-family: monospace"><%= @monitor[:model] %></span></div>
+</div>
 
 <% if @monitor[:extra_instructions].present? %>
   <p><em><%= @monitor[:extra_instructions] %></em></p>
@@ -77,8 +88,14 @@
 
           <br>
 
-          Tokens in/out:
-          <%= run[:debug_info]["input_tokens"] %> / <%= run[:debug_info]["output_tokens"] %>
+          Tokens:
+          <%= run[:debug_info]["input_tokens"] %>/<%= run[:debug_info]["output_tokens"] %>
+
+          <br>
+
+          <span title="<%= run[:model] %>">
+            <%= run[:cost] == 0 ? "Free " : "$#{run[:cost].round(5)}" %>
+          </span>
         </td>
         <td><%= run[:reasoning] %></td>
         <td>
@@ -108,8 +125,12 @@
             <%= run[:outcome] ? 'true' : 'false' %>
           </span>
           <br>
-          Tokens in/out:
-          <%= run[:debug_info]["input_tokens"] %> / <%= run[:debug_info]["output_tokens"] %>
+          Tokens:
+          <%= run[:debug_info]["input_tokens"] %>/<%= run[:debug_info]["output_tokens"] %>
+          <br>
+          <span title="<%= run[:model] %>">
+            <%= run[:cost] == 0 ? "Free " : "$#{run[:cost].round(5)}" %>
+          </span>
         </div>
 
         <div style="margin: 10px 0;">

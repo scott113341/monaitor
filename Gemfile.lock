@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/scott113341/ruby_llm-cost
+  revision: 8c772445ce85b508ea7b838fb26e905cb53cd40a
+  specs:
+    ruby_llm-cost (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -85,6 +91,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.10-x86_64-linux-gnu)
       racc (~> 1.4)
+    openssl (3.3.1)
     pg (1.6.2-x86_64-darwin)
     pg (1.6.2-x86_64-linux)
     playwright-ruby-client (1.55.0)
@@ -156,11 +163,13 @@ DEPENDENCIES
   activesupport (~> 8.0)
   dotenv (~> 3.1)
   http (~> 5.3)
+  openssl
   pg (~> 1.6)
   playwright-ruby-client (~> 1.55)
   puma (~> 7.0)
   rackup (~> 2.2)
   ruby_llm (~> 1.8)
+  ruby_llm-cost!
   ruby_llm-schema (~> 0.2.1)
   rushover (~> 0.3.0)
   sequel (~> 5.97)
