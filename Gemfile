@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "actionview", "~> 8.0"
+gem "actionview", "~> 8.1"
 gem "activesupport", "~> 8.0"
 gem "dotenv", "~> 3.1"
 gem "http", "~> 5.3"
