@@ -93,7 +93,7 @@ GEM
     openssl (3.3.2)
     pg (1.6.2-x86_64-darwin)
     pg (1.6.2-x86_64-linux)
-    playwright-ruby-client (1.56.0)
+    playwright-ruby-client (1.57.0)
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
     public_suffix (6.0.2)
@@ -165,7 +165,7 @@ DEPENDENCIES
   http (~> 5.3)
   openssl
   pg (~> 1.6)
-  playwright-ruby-client (~> 1.56)
+  playwright-ruby-client (~> 1.57)
   puma (~> 7.1)
   rackup (~> 2.2)
   ruby_llm (~> 1.9)
