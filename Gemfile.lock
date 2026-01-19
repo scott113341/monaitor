@@ -128,7 +128,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.9.2)
+    ruby_llm (1.11.0)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
@@ -172,7 +172,7 @@ DEPENDENCIES
   playwright-ruby-client (~> 1.57)
   puma (~> 7.1)
   rackup (~> 2.3)
-  ruby_llm (~> 1.9)
+  ruby_llm (~> 1.11)
   ruby_llm-cost!
   ruby_llm-schema (~> 0.2.5)
   rushover (~> 0.3.0)
