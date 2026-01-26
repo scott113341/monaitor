@@ -87,7 +87,7 @@ GEM
     net-http (0.9.1)
       uri (>= 0.11.1)
     netrc (0.11.0)
-    nio4r (2.7.4)
+    nio4r (2.7.5)
     nokogiri (1.19.0-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.0-x86_64-linux-gnu)
@@ -101,7 +101,7 @@ GEM
       mime-types (>= 3.0)
     prism (1.7.0)
     public_suffix (6.0.2)
-    puma (7.1.0)
+    puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.4)
@@ -170,7 +170,7 @@ DEPENDENCIES
   openssl
   pg (~> 1.6)
   playwright-ruby-client (~> 1.57)
-  puma (~> 7.1)
+  puma (~> 7.2)
   rackup (~> 2.3)
   ruby_llm (~> 1.11)
   ruby_llm-cost!
