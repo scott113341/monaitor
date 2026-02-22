@@ -103,7 +103,7 @@ class Check
   end
 
   def self.save_temp_file(name, extension, data)
-    file = Tempfile.new([name, "." + extension])
+    file = Tempfile.new([name, "." + extension], binmode: true)
     file.write(data)
     file.flush
     file.rewind
