@@ -1,29 +1,14 @@
 require "action_view"
-require "active_support/security_utils"
 require "sinatra"
 
 class App < Sinatra::Base
-  extend(ActiveSupport::SecurityUtils)
-
   configure do
     set(:port, ENV.fetch("PORT", 3858))
     set(:bind, "0.0.0.0")
   end
 
   helpers(ActionView::Helpers::DateHelper)
-
-  helpers do
-    def protected!
-      auth = Rack::Auth::Basic::Request.new(request.env)
-      unless auth.provided? &&
-          auth.basic? &&
-          secure_compare(auth.credentials[0], ENV.fetch("USERNAME", "")) &&
-          secure_compare(auth.credentials[1], ENV.fetch("PASSWORD", ""))
-        response["WWW-Authenticate"] = "Basic realm=\"Restricted Area\""
-        halt(401, "Not authorized\n")
-      end
-    end
-  end
+  helpers(Helpers)
 
   get("/") do
     monitors = Check.get_all
