@@ -12,7 +12,7 @@ loader = Zeitwerk::Loader.new
 loader.push_dir(File.join(__dir__, "app"))
 loader.setup
 
-DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_9")
+DB = Sequel.connect(ENV.fetch("DATABASE_URL"), search_path: "public_10")
 DB.extension(:pg_json, :pg_interval)
 
 PUSHOVER_API_TOKEN = ENV.fetch("PUSHOVER_API_TOKEN")

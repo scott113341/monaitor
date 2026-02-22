@@ -94,7 +94,7 @@
           <br>
 
           <span title="<%= run[:model] %>">
-            <%= run[:cost] == 0 ? "Free " : "$#{run[:cost].round(5)}" %>
+            <%= format_cost(run[:cost]) %>
           </span>
         </td>
         <td><%= run[:reasoning] %></td>
@@ -129,7 +129,7 @@
           <%= run[:debug_info]["input_tokens"] %>/<%= run[:debug_info]["output_tokens"] %>
           <br>
           <span title="<%= run[:model] %>">
-            <%= run[:cost] == 0 ? "Free " : "$#{run[:cost].round(5)}" %>
+            <%= format_cost(run[:cost]) %>
           </span>
         </div>
 
