@@ -92,7 +92,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.0-x86_64-linux-gnu)
       racc (~> 1.4)
-    openssl (4.0.0)
+    openssl (4.0.1)
     pg (1.6.3-x86_64-darwin)
     pg (1.6.3-x86_64-linux)
     playwright-ruby-client (1.58.1)
@@ -128,17 +128,17 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.12.0)
+    ruby_llm (1.12.1)
       base64
       event_stream_parser (~> 1)
       faraday (>= 2.0)
       faraday-multipart (>= 1)
       faraday-net_http (>= 1)
       faraday-retry (>= 2.0)
-      marcel (~> 1.0)
-      ruby_llm-schema (~> 0.2.1)
+      marcel (~> 1)
+      ruby_llm-schema (~> 0)
       zeitwerk (~> 2)
-    ruby_llm-schema (0.2.5)
+    ruby_llm-schema (0.3.0)
     rushover (0.3.0)
       json
       rest-client
@@ -156,7 +156,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.1.1)
-    zeitwerk (2.7.4)
+    zeitwerk (2.7.5)
 
 PLATFORMS
   x86_64-darwin-24
@@ -174,7 +174,7 @@ DEPENDENCIES
   rackup (~> 2.3)
   ruby_llm (~> 1.12)
   ruby_llm-cost!
-  ruby_llm-schema (~> 0.2.5)
+  ruby_llm-schema (~> 0.3.0)
   rushover (~> 0.3.0)
   sequel (~> 5.101)
   sinatra (~> 4.1)
