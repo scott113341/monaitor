@@ -57,7 +57,7 @@ class App < Sinatra::Base
       .insert(
         url: params[:url],
         determine: params[:determine].sub(/\.\s*\Z/, ""),
-        extra_instructions: params[:extra_instructions],
+        extra_instructions: params[:extra_instructions]&.strip.presence,
         run_interval: params[:run_interval],
         model:
       )
