@@ -6,6 +6,7 @@ ruby file: ".ruby-version"
 
 gem "actionview", "~> 8.1"
 gem "activesupport", "~> 8.0"
+gem "async", "~> 2.36"
 gem "dotenv", "~> 3.2"
 gem "http", "~> 5.3"
 gem "openssl"
