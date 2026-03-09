@@ -28,7 +28,7 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
-    async (2.36.0)
+    async (2.38.0)
       console (~> 1.29)
       fiber-annotation
       io-event (~> 1.11)
@@ -81,7 +81,7 @@ GEM
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     io-event (1.14.3)
-    json (2.18.1)
+    json (2.19.1)
     llhttp-ffi (0.5.1)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
@@ -144,7 +144,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.12.1)
+    ruby_llm (1.13.2)
       base64
       event_stream_parser (~> 1)
       faraday (>= 2.0)
@@ -182,7 +182,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (~> 8.1)
   activesupport (~> 8.0)
-  async (~> 2.36)
+  async (~> 2.38)
   dotenv (~> 3.2)
   http (~> 5.3)
   openssl
@@ -190,7 +190,7 @@ DEPENDENCIES
   playwright-ruby-client (~> 1.58)
   puma (~> 7.2)
   rackup (~> 2.3)
-  ruby_llm (~> 1.12)
+  ruby_llm (~> 1.13)
   ruby_llm-cost!
   ruby_llm-schema (~> 0.3.0)
   rushover (~> 0.3.0)
