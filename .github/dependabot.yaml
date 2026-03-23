@@ -11,12 +11,6 @@ updates:
       all:
         patterns:
           - "*"
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "10:00"
   - package-ecosystem: "npm"
     versioning-strategy: "increase"
     directory: "/"
