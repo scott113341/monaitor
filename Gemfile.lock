@@ -26,14 +26,14 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    async (2.38.1)
+    async (2.39.0)
       console (~> 1.29)
       fiber-annotation
       io-event (~> 1.11)
       metrics (~> 0.12)
       traces (~> 0.18)
     base64 (0.3.0)
-    bigdecimal (4.1.0)
+    bigdecimal (4.1.1)
     builder (3.3.0)
     concurrent-ruby (1.3.6)
     connection_pool (3.0.2)
@@ -69,7 +69,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    io-event (1.14.4)
+    io-event (1.15.1)
     json (2.19.3)
     llhttp (0.6.1)
     logger (1.7.0)
@@ -130,7 +130,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.14.0)
+    ruby_llm (1.14.1)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
@@ -145,7 +145,7 @@ GEM
       json
       rest-client
     securerandom (0.4.1)
-    sequel (5.102.0)
+    sequel (5.103.0)
       bigdecimal
     sinatra (4.2.1)
       logger (>= 1.6.0)
@@ -168,7 +168,7 @@ PLATFORMS
 DEPENDENCIES
   actionview (~> 8.1)
   activesupport (~> 8.0)
-  async (~> 2.38)
+  async (~> 2.39)
   dotenv (~> 3.2)
   http (~> 6.0)
   openssl
@@ -180,7 +180,7 @@ DEPENDENCIES
   ruby_llm-cost!
   ruby_llm-schema (~> 0.3.0)
   rushover (~> 0.3.0)
-  sequel (~> 5.102)
+  sequel (~> 5.103)
   sinatra (~> 4.1)
 
 RUBY VERSION
