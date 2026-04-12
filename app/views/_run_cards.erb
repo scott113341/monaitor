@@ -1,0 +1,12 @@
+<% @runs_page.each do |run| %>
+  <%= partial(:_run_card, run: run) %>
+<% end %>
+<% if @has_more %>
+  <div
+    id="mobile-scroll-sentinel"
+    hx-get="/monitors/<%= @monitor_id %>/runs?format=mobile&offset=<%= @next_offset %>"
+    hx-trigger="intersect once"
+    hx-swap="outerHTML"
+    style="height: 1px;"
+  ></div>
+<% end %>

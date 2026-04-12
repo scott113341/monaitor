@@ -28,18 +28,50 @@ class App < Sinatra::Base
     ]
       .first
 
-    @runs = DB[
+    runs = DB[
       <<-SQL,
         SELECT id, created_at, debug_info, outcome, reasoning, model, cost
         FROM runs
         WHERE monitor_id = ?
         ORDER BY created_at DESC
+        LIMIT 21
       SQL
       params[:id]
     ]
       .all
 
+    @has_more = runs.length > 20
+    @runs = runs.first(20)
+
     erb(:monitor)
+  end
+
+  get("/monitors/:id/runs") do
+    offset = (params[:offset] || 0).to_i
+    limit = 20
+
+    runs = DB[
+      <<-SQL,
+        SELECT id, created_at, debug_info, outcome, reasoning, model, cost
+        FROM runs
+        WHERE monitor_id = ?
+        ORDER BY created_at DESC
+        LIMIT ? OFFSET ?
+      SQL
+      params[:id], limit + 1, offset
+    ].all
+
+    @has_more = runs.length > limit
+    @runs_page = runs.first(limit)
+    @monitor_id = params[:id]
+    @next_offset = offset + @runs_page.length
+
+    case params[:format]
+    when "mobile"
+      erb(:_run_cards, layout: false)
+    else
+      erb(:_run_rows, layout: false)
+    end
   end
 
   get("/monitors.new") do

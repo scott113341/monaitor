@@ -72,79 +72,34 @@
       <th style="width: 200px">Screenshot</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="runs-table-body">
     <% @runs.each_with_index do |run, idx| %>
-      <tr>
-        <td>
-          <span title="<%= run[:created_at] %>">
-            <%= "#{time_ago_in_words(run[:created_at]).capitalize} ago" %>
-          </span>
-
-          <br>
-
-          <span style="color: <%= run[:outcome] ? '#4caf50' : '#f44336' %>; font-family: monospace">
-            <%= run[:outcome] ? 'true' : 'false' %>
-          </span>
-
-          <br>
-
-          Tokens:
-          <%= run[:debug_info]["input_tokens"] %>/<%= run[:debug_info]["output_tokens"] %>
-
-          <br>
-
-          <span title="<%= run[:model] %>">
-            <%= format_cost(run[:cost]) %>
-          </span>
-        </td>
-        <td><%= run[:reasoning] %></td>
-        <td>
-          <a href="/runs/<%= run[:id] %>/screenshot" target="_blank">
-            <img
-              src="/runs/<%= run[:id] %>/screenshot"
-              class="screenshot"
-              alt="Screenshot"
-              loading="<%= idx < 10 ? "eager" : "lazy" %>"
-            />
-          </a>
-        </td>
-      </tr>
+      <%= partial(:_run_row, run: run, loading: idx < 10 ? "eager" : "lazy") %>
+    <% end %>
+    <% if @has_more %>
+      <tr
+        id="desktop-scroll-sentinel"
+        hx-get="/monitors/<%= @monitor[:id] %>/runs?format=desktop&offset=<%= @runs.length %>"
+        hx-trigger="intersect once"
+        hx-swap="outerHTML"
+        style="height: 1px; max-height: 1px; overflow: hidden;"
+      ><td colspan="3" style="padding: 0; border: 0; height: 1px;"></td></tr>
     <% end %>
     </tbody>
   </table>
 
-  <div class="mobile">
+  <div class="mobile" id="runs-mobile-list">
     <% @runs.each do |run| %>
-      <div style="border-top: 1px solid black; padding: 10px 0; margin: 10px 0;">
-        <div>
-          <span title="<%= run[:created_at] %>">
-            <%= "#{time_ago_in_words(run[:created_at]).capitalize} ago" %>
-          </span>
-          <br>
-          <span style="color: <%= run[:outcome] ? '#4caf50' : '#f44336' %>; font-family: monospace">
-            <%= run[:outcome] ? 'true' : 'false' %>
-          </span>
-          <br>
-          Tokens:
-          <%= run[:debug_info]["input_tokens"] %>/<%= run[:debug_info]["output_tokens"] %>
-          <br>
-          <span title="<%= run[:model] %>">
-            <%= format_cost(run[:cost]) %>
-          </span>
-        </div>
-
-        <div style="margin: 10px 0;">
-          <a href="/runs/<%= run[:id] %>/screenshot" target="_blank">
-            <img
-              src="/runs/<%= run[:id] %>/screenshot"
-              alt="Screenshot"
-              class="screenshot-mobile"
-            >
-          </a>
-        </div>
-
-        <div><%= run[:reasoning] %></div>
-      </div>
+      <%= partial(:_run_card, run: run) %>
+    <% end %>
+    <% if @has_more %>
+      <div
+        id="mobile-scroll-sentinel"
+        hx-get="/monitors/<%= @monitor[:id] %>/runs?format=mobile&offset=<%= @runs.length %>"
+        hx-trigger="intersect once"
+        hx-swap="outerHTML"
+        style="height: 1px;"
+      ></div>
     <% end %>
   </div>
 <% end %>

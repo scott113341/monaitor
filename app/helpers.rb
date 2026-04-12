@@ -14,6 +14,10 @@ module Helpers
     end
   end
 
+  def partial(template, locals = {})
+    erb(template, layout: false, locals: locals)
+  end
+
   def format_cost(cost)
     return "Unknown cost" if cost.nil?
     return "Free" if cost == 0

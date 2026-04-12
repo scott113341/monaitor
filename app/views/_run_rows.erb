@@ -1,0 +1,12 @@
+<% @runs_page.each do |run| %>
+  <%= partial(:_run_row, run: run, loading: "lazy") %>
+<% end %>
+<% if @has_more %>
+  <tr
+    id="desktop-scroll-sentinel"
+    hx-get="/monitors/<%= @monitor_id %>/runs?format=desktop&offset=<%= @next_offset %>"
+    hx-trigger="intersect once"
+    hx-swap="outerHTML"
+    style="height: 1px; max-height: 1px; overflow: hidden;"
+  ><td colspan="3" style="padding: 0; border: 0; height: 1px;"></td></tr>
+<% end %>

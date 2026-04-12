@@ -1,0 +1,35 @@
+<tr>
+  <td>
+    <span title="<%= run[:created_at] %>">
+      <%= "#{time_ago_in_words(run[:created_at]).capitalize} ago" %>
+    </span>
+
+    <br>
+
+    <span style="color: <%= run[:outcome] ? '#4caf50' : '#f44336' %>; font-family: monospace">
+      <%= run[:outcome] ? 'true' : 'false' %>
+    </span>
+
+    <br>
+
+    Tokens:
+    <%= run[:debug_info]["input_tokens"] %>/<%= run[:debug_info]["output_tokens"] %>
+
+    <br>
+
+    <span title="<%= run[:model] %>">
+      <%= format_cost(run[:cost]) %>
+    </span>
+  </td>
+  <td><%= run[:reasoning] %></td>
+  <td>
+    <a href="/runs/<%= run[:id] %>/screenshot" target="_blank">
+      <img
+        src="/runs/<%= run[:id] %>/screenshot"
+        class="screenshot"
+        alt="Screenshot"
+        loading="<%= loading %>"
+      />
+    </a>
+  </td>
+</tr>
