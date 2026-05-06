@@ -33,7 +33,7 @@ GEM
       metrics (~> 0.12)
       traces (~> 0.18)
     base64 (0.3.0)
-    bigdecimal (4.1.1)
+    bigdecimal (4.1.2)
     builder (3.3.0)
     concurrent-ruby (1.3.6)
     connection_pool (3.0.2)
@@ -81,7 +81,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.0407)
+    mime-types-data (3.2026.0414)
     minitest (6.0.2)
       drb (~> 2.0)
       prism (~> 1.5)
@@ -102,7 +102,7 @@ GEM
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-darwin)
     pg (1.6.3-x86_64-linux)
-    playwright-ruby-client (1.59.0)
+    playwright-ruby-client (1.59.1)
       base64
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
@@ -148,7 +148,7 @@ GEM
       json
       rest-client
     securerandom (0.4.1)
-    sequel (5.103.0)
+    sequel (5.104.0)
       bigdecimal
     sinatra (4.2.1)
       logger (>= 1.6.0)
@@ -177,14 +177,14 @@ DEPENDENCIES
   http (~> 6.0)
   openssl
   pg (~> 1.6)
-  playwright-ruby-client (~> 1.58)
+  playwright-ruby-client (~> 1.59)
   puma (~> 8.0)
   rackup (~> 2.3)
   ruby_llm (~> 1.14)
   ruby_llm-cost!
   ruby_llm-schema (~> 0.3.0)
   rushover (~> 0.3.0)
-  sequel (~> 5.103)
+  sequel (~> 5.104)
   sinatra (~> 4.1)
 
 RUBY VERSION
