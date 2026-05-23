@@ -2,7 +2,6 @@ require "active_support/all"
 require "dotenv/load"
 require "playwright"
 require "ruby_llm"
-require "ruby_llm/cost"
 require "ruby_llm/schema"
 require "rushover"
 require "sequel"
@@ -24,6 +23,8 @@ RubyLLM.configure do |config|
   config.default_model = "mistralai/mistral-small-3.1-24b-instruct:free"
   # config.default_model = "openai/gpt-5-nano"
 end
+
+RubyLLM.models.refresh!
 
 if __FILE__ == $PROGRAM_NAME
   Thread.new do

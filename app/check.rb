@@ -55,7 +55,7 @@ class Check
     pp(response)
 
     outcome = response.content["determination"]
-    [outcome, screenshot, response, chat.total_cost]
+    [outcome, screenshot, response, chat.cost.total]
   end
 
   def self.run!(monitor)
