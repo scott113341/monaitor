@@ -50,6 +50,10 @@
     </button>
   </form>
 
+  <a href="/monitors/<%= @monitor[:id] %>/edit">
+    <button type="button" style="background-color: #bbeef3;">Edit</button>
+  </a>
+
   <% if @monitor[:paused] %>
     <form method="post" action="/monitors/<%= @monitor[:id] %>/action">
       <button name="action" value="resume" type="submit" style="background-color: #b2dfff;">Resume</button>

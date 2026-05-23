@@ -79,6 +79,28 @@ class App < Sinatra::Base
     erb(:new_monitor)
   end
 
+  get("/monitors/:id/edit") do
+    protected!
+    @monitor = DB[:monitors].where(id: params[:id]).first
+    erb(:edit_monitor)
+  end
+
+  post("/monitors/:id") do
+    protected!
+
+    model = params[:model] == "other" ? params[:custom_model] : params[:model]
+
+    DB[:monitors].where(id: params[:id]).update(
+      url: params[:url],
+      determine: params[:determine].sub(/\.\s*\Z/, ""),
+      extra_instructions: params[:extra_instructions]&.strip.presence,
+      run_interval: params[:run_interval],
+      model:
+    )
+
+    redirect("/monitors/#{params[:id]}")
+  end
+
   post("/monitors") do
     protected!
 
