@@ -98,11 +98,11 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.2-x86_64-linux-gnu)
       racc (~> 1.4)
-    openssl (4.0.1)
+    openssl (4.0.2)
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-darwin)
     pg (1.6.3-x86_64-linux)
-    playwright-ruby-client (1.59.1)
+    playwright-ruby-client (1.60.0)
       base64
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
@@ -143,7 +143,7 @@ GEM
       marcel (~> 1)
       ruby_llm-schema (~> 0)
       zeitwerk (~> 2)
-    ruby_llm-schema (0.3.0)
+    ruby_llm-schema (0.4.0)
     rushover (0.3.0)
       json
       rest-client
@@ -177,12 +177,12 @@ DEPENDENCIES
   http (~> 6.0)
   openssl
   pg (~> 1.6)
-  playwright-ruby-client (~> 1.59)
+  playwright-ruby-client (~> 1.60)
   puma (~> 8.0)
   rackup (~> 2.3)
   ruby_llm (~> 1.15)
   ruby_llm-cost!
-  ruby_llm-schema (~> 0.3.0)
+  ruby_llm-schema (~> 0.4.0)
   rushover (~> 0.3.0)
   sequel (~> 5.104)
   sinatra (~> 4.1)
