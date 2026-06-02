@@ -107,7 +107,7 @@ GEM
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
     prism (1.9.0)
-    puma (8.0.1)
+    puma (8.0.2)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.4)
@@ -148,7 +148,7 @@ GEM
       json
       rest-client
     securerandom (0.4.1)
-    sequel (5.104.0)
+    sequel (5.105.0)
       bigdecimal
     sinatra (4.2.1)
       logger (>= 1.6.0)
@@ -184,7 +184,7 @@ DEPENDENCIES
   ruby_llm-cost!
   ruby_llm-schema (~> 0.4.0)
   rushover (~> 0.3.0)
-  sequel (~> 5.104)
+  sequel (~> 5.105)
   sinatra (~> 4.1)
 
 RUBY VERSION
