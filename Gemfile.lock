@@ -47,13 +47,13 @@ GEM
     drb (2.2.3)
     erubi (1.13.1)
     event_stream_parser (1.0.0)
-    faraday (2.14.1)
+    faraday (2.14.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
     faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
-    faraday-net_http (3.4.2)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     faraday-retry (2.4.0)
       faraday (~> 2.0)
@@ -70,13 +70,13 @@ GEM
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     io-event (1.15.1)
-    json (2.19.5)
+    json (2.19.9)
     llhttp (0.6.1)
     logger (1.7.0)
     loofah (2.25.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
-    marcel (1.1.0)
+    marcel (1.2.1)
     metrics (0.15.0)
     mime-types (3.7.0)
       logger
@@ -133,7 +133,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
-    ruby_llm (1.15.0)
+    ruby_llm (1.16.0)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
@@ -162,7 +162,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.1.1)
-    zeitwerk (2.7.5)
+    zeitwerk (2.8.2)
 
 PLATFORMS
   arm64-darwin-25
@@ -180,7 +180,7 @@ DEPENDENCIES
   playwright-ruby-client (~> 1.60)
   puma (~> 8.0)
   rackup (~> 2.3)
-  ruby_llm (~> 1.15)
+  ruby_llm (~> 1.16)
   ruby_llm-cost!
   ruby_llm-schema (~> 0.4.0)
   rushover (~> 0.3.0)
