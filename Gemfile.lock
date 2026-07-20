@@ -61,7 +61,7 @@ GEM
     fiber-local (1.1.0)
       fiber-storage
     fiber-storage (1.0.1)
-    http (6.0.3)
+    http (6.0.4)
       http-cookie (~> 1.0)
       llhttp (~> 0.6.1)
     http-accept (1.7.0)
@@ -71,7 +71,7 @@ GEM
       concurrent-ruby (~> 1.0)
     io-event (1.19.1)
     json (2.20.0)
-    llhttp (0.6.1)
+    llhttp (0.6.2)
     logger (1.7.0)
     loofah (2.25.1)
       crass (~> 1.0.2)
