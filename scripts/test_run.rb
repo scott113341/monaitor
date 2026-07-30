@@ -5,12 +5,12 @@ require_relative "../main"
 # MODEL = "google/gemma-3-27b-it" # 7/10, 3 wrong
 # MODEL = "moonshotai/kimi-k2.5" # 8/10 right, 2 bad schema
 # MODEL = "openai/gpt-5-nano" # 10/10 right
-MODEL = "openai/gpt-5-nano"
+MODEL = "qwen/qwen3.7-flash"
 
 monitor = {
-  determine: "whether the full trail is complete, including the final section between Timnath and Windsor",
+  determine: "whether the Broomfield location is open",
   extra_instructions: nil,
-  url: "https://www.larimer.gov/naturalresources/parks/regional-paved-trails/poudre-river-trail",
+  url: "https://cosmospizza.com",
   model: MODEL
 }
 

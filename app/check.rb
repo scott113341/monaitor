@@ -38,7 +38,7 @@ class Check
     text_file = save_temp_file("body", "txt", text)
 
     chat = RubyLLM
-      .chat(model: monitor[:model])
+      .chat(model: monitor[:model], provider: :openrouter, assume_model_exists: true)
       .with_schema(DeterminationSchema)
 
     prompt = "Given this webpage screenshot & body.innerText, determine #{monitor[:determine]}."

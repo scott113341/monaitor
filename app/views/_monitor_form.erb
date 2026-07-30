@@ -1,5 +1,5 @@
-<% known_models = ["mistralai/mistral-small-3.1-24b-instruct:free", "openai/gpt-5-nano"] %>
-<% current_model = monitor&.dig(:model) || "mistralai/mistral-small-3.1-24b-instruct:free" %>
+<% known_models = ["openai/gpt-5-nano", "qwen/qwen3.7-flash", "mistralai/mistral-small-3.1-24b-instruct:free"] %>
+<% current_model = monitor&.dig(:model) || known_models.first %>
 <% is_custom_model = monitor && !known_models.include?(current_model) %>
 <% run_interval_value = monitor ? ActiveSupport::Duration.build(monitor[:run_interval].to_i).inspect : "8 hours" %>
 
