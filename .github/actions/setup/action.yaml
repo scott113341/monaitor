@@ -1,0 +1,11 @@
+name: Setup
+description: Install Ruby and dependencies
+runs:
+  using: composite
+  steps:
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: .ruby-version
+        # Runs "bundle install" and caches the installed gems
+        bundler-cache: true

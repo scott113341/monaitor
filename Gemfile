@@ -20,3 +20,7 @@ gem "ruby_llm-schema", "~> 0.4.0"
 gem "rushover", "~> 0.3.0"
 gem "sequel", "~> 5.106"
 gem "sinatra", "~> 4.1"
+
+group :test do
+  gem "rspec", "~> 3.13"
+end
