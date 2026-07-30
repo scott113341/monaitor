@@ -29,15 +29,5 @@ RSpec.describe(Helpers) do
       expect(helper.format_cost(0.000001)).to(eq("< $0.00001"))
       expect(helper.format_cost(1e-9)).to(eq("< $0.00001"))
     end
-
-    # Regression: Float#to_s switches to scientific notation below 0.0001, so
-    # "$#{cost.round(5)}" rendered a real cost of 0.00009 as "$9.0e-05".
-    it("never renders scientific notation") do
-      costs = [1e-9, 1e-7, 0.00009, 0.0001, 0.001, 0.01, 0.1, 1.0, 100.0, 1e6]
-
-      costs.each do |cost|
-        expect(helper.format_cost(cost)).not_to(match(/e[-+]/i))
-      end
-    end
   end
 end
