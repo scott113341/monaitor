@@ -133,6 +133,9 @@ class App < Sinatra::Base
       DB[:monitors].where(id: params[:id]).update(paused: true)
     when "resume"
       DB[:monitors].where(id: params[:id]).update(paused: false)
+    when "delete"
+      DB[:monitors].where(id: params[:id]).delete
+      redirect("/")
     end
 
     redirect("/monitors/#{params[:id]}")

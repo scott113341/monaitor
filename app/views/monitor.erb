@@ -63,6 +63,14 @@
       <button name="action" value="pause" type="submit" style="background-color: #ffe0b2;">Pause</button>
     </form>
   <% end %>
+
+  <form
+    method="post"
+    action="/monitors/<%= @monitor[:id] %>/action"
+    onsubmit="return confirm('Delete this monitor and all of its runs? This cannot be undone.');"
+  >
+    <button name="action" value="delete" type="submit" style="background-color: #ffbdbd;">Delete</button>
+  </form>
 </div>
 
 <% if @runs.empty? %>
