@@ -16,16 +16,20 @@ monitor = {
 
 pp(monitor)
 
+screenshot, text = Check.fetch_page(monitor[:url])
+screenshot_file = Check.save_temp_file("screenshot", "png", screenshot)
+text_file = Check.save_temp_file("body", "txt", text)
+
 async_block = Async do
   10
     .times
-    .map { Async { Check.determine(monitor) } }
+    .map { Async { Check.determine(monitor, screenshot_file.path, text_file.path) } }
     .map(&:wait)
 end
 
 results = async_block.wait
-outcomes = results.map { |outcome, _screenshot, _response| outcome }
-responses = results.map { |_outcome, _screenshot, response| response }
+outcomes = results.map { |outcome, _response| outcome }
+responses = results.map { |_outcome, response| response }
 
 pp(responses)
 pp(outcomes)

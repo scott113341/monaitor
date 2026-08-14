@@ -45,15 +45,21 @@ RSpec.describe(Check) do
   end
 
   describe(".determine") do
+    let(:screenshot_path) { described_class.save_temp_file("screenshot", "png", screenshot).path }
+    let(:text_path) { described_class.save_temp_file("body", "txt", page_text).path }
+
     before do
-      allow(described_class).to receive(:fetch_page).and_return([screenshot, page_text])
       allow(RubyLLM).to receive(:chat).and_return(chat)
       allow(chat).to receive(:with_schema).and_return(chat)
       allow(chat).to receive(:ask).and_return(response)
     end
 
+    def determine
+      described_class.determine(monitor, screenshot_path, text_path)
+    end
+
     it("asks the monitor's model via openrouter using the determination schema") do
-      described_class.determine(monitor)
+      determine
 
       expect(RubyLLM).to(
         have_received(:chat)
@@ -63,7 +69,7 @@ RSpec.describe(Check) do
     end
 
     it("builds the prompt from the monitor's determine text") do
-      described_class.determine(monitor)
+      determine
 
       expect(chat).to(
         have_received(:ask)
@@ -78,7 +84,7 @@ RSpec.describe(Check) do
     it("appends extra instructions when present") do
       monitor[:extra_instructions] = "Ignore the cookie banner."
 
-      described_class.determine(monitor)
+      determine
 
       expect(chat).to(
         have_received(:ask)
@@ -89,26 +95,27 @@ RSpec.describe(Check) do
     it("does not append blank extra instructions") do
       monitor[:extra_instructions] = "   "
 
-      described_class.determine(monitor)
+      determine
 
       expect(chat).to(have_received(:ask).with(a_string_ending_with("on sale."), anything))
     end
 
-    it("attaches the screenshot and page text as files") do
-      described_class.determine(monitor)
+    it("attaches the given screenshot and page text files") do
+      determine
 
-      expect(chat).to(have_received(:ask)) do |_prompt, with:|
-        screenshot_path, text_path = with
-
-        expect(File.extname(screenshot_path)).to(eq(".png"))
-        expect(File.binread(screenshot_path)).to(eq(screenshot))
-        expect(File.extname(text_path)).to(eq(".txt"))
-        expect(File.read(text_path)).to(eq(page_text))
-      end
+      expect(chat).to(have_received(:ask).with(anything, with: [screenshot_path, text_path]))
     end
 
-    it("returns the outcome, screenshot, response, and cost") do
-      expect(described_class.determine(monitor)).to(eq([true, screenshot, response, 0.00009]))
+    it("does not fetch the page itself") do
+      allow(described_class).to receive(:fetch_page)
+
+      determine
+
+      expect(described_class).not_to(have_received(:fetch_page))
+    end
+
+    it("returns the outcome, response, and cost") do
+      expect(determine).to(eq([true, response, 0.00009]))
     end
   end
 
@@ -117,8 +124,9 @@ RSpec.describe(Check) do
     let(:outcome) { true }
 
     before do
+      allow(described_class).to receive(:fetch_page).and_return([screenshot, page_text])
       allow(described_class).to(
-        receive(:determine).and_return([outcome, screenshot, response, 0.00009])
+        receive(:determine).and_return([outcome, response, 0.00009])
       )
       allow(runs).to receive(:insert)
 
@@ -126,6 +134,20 @@ RSpec.describe(Check) do
       allow(db).to receive(:[]).with(:runs).and_return(runs)
       stub_const("DB", db)
       stub_const("PUSHOVER", double("PUSHOVER", notify: nil))
+    end
+
+    it("fetches the page and hands it to determine as files") do
+      described_class.run!(monitor)
+
+      expect(described_class).to(have_received(:fetch_page).with(monitor[:url]))
+      expect(described_class).to(have_received(:determine)) do |_monitor, *paths|
+        screenshot_path, text_path = paths
+
+        expect(File.extname(screenshot_path)).to(eq(".png"))
+        expect(File.binread(screenshot_path)).to(eq(screenshot))
+        expect(File.extname(text_path)).to(eq(".txt"))
+        expect(File.read(text_path)).to(eq(page_text))
+      end
     end
 
     it("records the run against the monitor") do

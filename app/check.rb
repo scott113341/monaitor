@@ -32,11 +32,7 @@ class Check
       .all
   end
 
-  def self.determine(monitor)
-    screenshot, text = fetch_page(monitor[:url])
-    screenshot_file = save_temp_file("screenshot", "png", screenshot)
-    text_file = save_temp_file("body", "txt", text)
-
+  def self.determine(monitor, screenshot_path, text_path)
     chat = RubyLLM
       .chat(model: monitor[:model], provider: :openrouter, assume_model_exists: true)
       .with_schema(DeterminationSchema)
@@ -48,18 +44,22 @@ class Check
     response = chat.ask(
       prompt,
       with: [
-        screenshot_file.path,
-        text_file.path
+        screenshot_path,
+        text_path
       ]
     )
     pp(response)
 
     outcome = response.content["determination"]
-    [outcome, screenshot, response, chat.total_cost]
+    [outcome, response, chat.total_cost]
   end
 
   def self.run!(monitor)
-    outcome, screenshot, response, cost = determine(monitor)
+    screenshot, text = fetch_page(monitor[:url])
+    screenshot_file = save_temp_file("screenshot", "png", screenshot)
+    text_file = save_temp_file("body", "txt", text)
+
+    outcome, response, cost = determine(monitor, screenshot_file.path, text_file.path)
 
     DB[:runs].insert(
       monitor_id: monitor[:id],
