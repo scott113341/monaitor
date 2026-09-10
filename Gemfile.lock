@@ -69,7 +69,7 @@ GEM
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     io-event (1.21.1)
-    json (3.0.0)
+    json (2.21.2)
     llhttp (0.6.2)
     logger (1.7.0)
     loofah (2.25.2)
@@ -185,6 +185,7 @@ DEPENDENCIES
   async (~> 2.45)
   dotenv (~> 3.2)
   http (~> 6.0)
+  json (< 3)
   openssl
   pg (~> 1.6)
   playwright-ruby-client (~> 1.62)
