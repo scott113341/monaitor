@@ -7,6 +7,11 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "10:00"
+    # json 3.x was deliberately rolled back in 538bbd6b ("Downgrade json gem").
+    # Hold the major until that root cause is understood; minor/patch still flow.
+    ignore:
+      - dependency-name: "json"
+        update-types: ["version-update:semver-major"]
     groups:
       minor-and-patch:
         patterns:
