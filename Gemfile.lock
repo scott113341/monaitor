@@ -1,9 +1,3 @@
-GIT
-  remote: https://github.com/scott113341/ruby_llm-cost
-  revision: e78f9e4c24c6dff97aaab89ab1b60837438da8ec
-  specs:
-    ruby_llm-cost (0.0.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -160,8 +154,6 @@ GEM
       marcel (>= 1.0, < 3)
       schematist (~> 1.1)
       zeitwerk (~> 2)
-    ruby_llm-schema (1.0.0)
-      schematist (~> 1.0)
     rushover (0.3.0)
       json
       rest-client
@@ -201,9 +193,8 @@ DEPENDENCIES
   rackup (~> 2.3)
   rspec (~> 3.13)
   ruby_llm (~> 2.0)
-  ruby_llm-cost!
-  ruby_llm-schema (~> 1.0.0)
   rushover (~> 0.3.0)
+  schematist (~> 1.1)
   sequel (~> 5.108)
   sinatra (~> 4.1)
 

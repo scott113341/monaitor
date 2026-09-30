@@ -15,12 +15,12 @@ RSpec.describe(Check) do
   let(:response) do
     instance_double(
       RubyLLM::Message,
-      content: {"determination" => true, "reasoning" => "The page says sold out"},
+      parsed: {"determination" => true, "reasoning" => "The page says sold out"},
       to_h: {role: :assistant, content: {"determination" => true}}
     )
   end
 
-  let(:chat) { instance_double(RubyLLM::Chat, total_cost: 0.00009) }
+  let(:chat) { instance_double(RubyLLM::Chat, cost: instance_double(RubyLLM::Cost, total: 0.00009)) }
 
   before do
     # Keep the suite quiet: `determine` logs progress with puts/pp

@@ -1,5 +1,5 @@
 class Check
-  class DeterminationSchema < RubyLLM::Schema
+  class DeterminationSchema < Schematist::Schema
     string(
       :reasoning,
       description: "Some brief plaintext reasoning for your determination"
@@ -50,8 +50,8 @@ class Check
     )
     pp(response)
 
-    outcome = response.content["determination"]
-    [outcome, response, chat.total_cost]
+    outcome = response.parsed["determination"]
+    [outcome, response, chat.cost.total]
   end
 
   def self.run!(monitor)
@@ -64,7 +64,7 @@ class Check
     DB[:runs].insert(
       monitor_id: monitor[:id],
       outcome:,
-      reasoning: response.content["reasoning"],
+      reasoning: response.parsed["reasoning"],
       screenshot: Sequel::SQL::Blob.new(screenshot),
       debug_info: response.to_h.to_json,
       model: monitor[:model],
@@ -72,7 +72,7 @@ class Check
     )
 
     if outcome
-      PUSHOVER.notify(response.content["reasoning"], url: monitor[:url])
+      PUSHOVER.notify(response.parsed["reasoning"], url: monitor[:url])
       # DB[:monitors].where(id: monitor[:id]).update(paused: true)
     end
   end

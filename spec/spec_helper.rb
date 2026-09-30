@@ -4,8 +4,7 @@
 
 require "active_support/all"
 require "ruby_llm"
-require "ruby_llm/cost"
-require "ruby_llm/schema"
+require "schematist"
 require "sequel"
 require "tempfile"
 
