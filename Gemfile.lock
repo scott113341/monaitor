@@ -91,10 +91,9 @@ GEM
     nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
     openssl (4.0.2)
-    pg (1.6.3)
-    pg (1.6.3-arm64-darwin)
-    pg (1.6.3-x86_64-darwin)
-    pg (1.6.3-x86_64-linux)
+    pg (1.7.0-arm64-darwin)
+    pg (1.7.0-x86_64-darwin)
+    pg (1.7.0-x86_64-linux)
     playwright-ruby-client (1.63.0)
       base64
       concurrent-ruby (>= 1.1.6)
@@ -183,7 +182,7 @@ DEPENDENCIES
   http (~> 6.0)
   json (< 3)
   openssl
-  pg (~> 1.6)
+  pg (~> 1.7)
   playwright-ruby-client (~> 1.63)
   puma (~> 8.0)
   rackup (~> 2.3)
