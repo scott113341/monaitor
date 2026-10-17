@@ -88,7 +88,7 @@ class App < Sinatra::Base
   post("/monitors/:id") do
     protected!
 
-    model = params[:model] == "other" ? params[:custom_model] : params[:model]
+    model = (params[:model] == "other") ? params[:custom_model] : params[:model]
 
     DB[:monitors].where(id: params[:id]).update(
       url: params[:url],
@@ -104,7 +104,7 @@ class App < Sinatra::Base
   post("/monitors") do
     protected!
 
-    model = params[:model] == "other" ? params[:custom_model] : params[:model]
+    model = (params[:model] == "other") ? params[:custom_model] : params[:model]
 
     monitor = DB[:monitors]
       .returning

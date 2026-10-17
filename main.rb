@@ -34,7 +34,7 @@ if __FILE__ == $PROGRAM_NAME
         sleep(1.minute + rand(10.seconds))
         puts("Running #{monitor[:id]}")
         Check.run!(monitor)
-      rescue StandardError => e
+      rescue => e
         puts("Error: #{e.message}", e.backtrace)
       end
 

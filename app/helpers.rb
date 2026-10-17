@@ -22,6 +22,6 @@ module Helpers
     return "Unknown cost" if cost.nil?
     return "Free" if cost == 0
     return "< $0.00001" if cost < 0.00001
-    cost < 0.01 ? format("$%.5f", cost) : format("$%.2f", cost)
+    (cost < 0.01) ? format("$%.5f", cost) : format("$%.2f", cost)
   end
 end
