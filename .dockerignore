@@ -1,3 +1,6 @@
 /.env
 /.git/
+/.github/
 /.idea/
+/node_modules/
+/spec/
