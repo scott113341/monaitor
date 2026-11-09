@@ -17,7 +17,7 @@ gem "rackup", "~> 2.3"
 gem "ruby_llm", "~> 2.1"
 gem "schematist", "~> 1.1"
 gem "rushover", "~> 0.3.0"
-gem "sequel", "~> 5.109"
+gem "sequel", "~> 5.110"
 gem "sinatra", "~> 4.1"
 
 group :test do
