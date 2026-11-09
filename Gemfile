@@ -5,7 +5,7 @@ source "https://rubygems.org"
 ruby file: ".ruby-version"
 
 gem "actionview", "~> 8.1"
-gem "activesupport", "~> 8.0"
+gem "activesupport", "~> 8.1"
 gem "async", "~> 2.46"
 gem "dotenv", "~> 3.2"
 gem "http", "~> 6.0"
