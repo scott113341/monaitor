@@ -40,7 +40,7 @@ GEM
     dotenv (3.2.0)
     drb (2.2.3)
     erubi (1.13.1)
-    faraday (2.15.0)
+    faraday (2.15.1)
       faraday-net_http (>= 2.0, < 3.6)
       json
       logger
@@ -109,7 +109,7 @@ GEM
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
     prism (1.9.0)
-    puma (8.0.2)
+    puma (8.0.3)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.4)
@@ -169,13 +169,14 @@ GEM
       rubocop-ast (>= 1.47.1, < 2.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    ruby_llm (2.1.1)
+    ruby_llm (2.2.0)
       base64
       faraday (>= 1.10.0, != 2.0.0)
       faraday-multipart (>= 1)
       faraday-net_http (>= 1)
       faraday-retry (>= 1)
       json (< 4)
+      logger
       marcel (>= 1.0, < 3)
       schematist (~> 1.1)
       zeitwerk (~> 2)
@@ -232,7 +233,7 @@ DEPENDENCIES
   puma (~> 8.0)
   rackup (~> 2.3)
   rspec (~> 3.13)
-  ruby_llm (~> 2.1)
+  ruby_llm (~> 2.2)
   rushover (~> 0.3.0)
   schematist (~> 1.1)
   sequel (~> 5.110)
