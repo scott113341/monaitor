@@ -1,4 +1,4 @@
-FROM ruby:4.0.9 AS build
+FROM ruby:4.0.10 AS build
 
 ENV BUNDLE_WITHOUT=test
 
@@ -12,7 +12,7 @@ RUN bundle install \
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /nodesource.gpg
 
 
-FROM ruby:4.0.9-slim
+FROM ruby:4.0.10-slim
 
 ENV BUNDLE_WITHOUT=test
 
