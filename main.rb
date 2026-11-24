@@ -25,22 +25,7 @@ RubyLLM.configure do |config|
 end
 
 if __FILE__ == $PROGRAM_NAME
-  Thread.new do
-    loop do
-      Check.get_all.each do |monitor|
-        next if monitor[:paused]
-        next if (monitor[:last_run_at] || Time.at(0)) > Time.now.utc - monitor[:run_interval]
-
-        sleep(1.minute + rand(10.seconds))
-        puts("Running #{monitor[:id]}")
-        Check.run!(monitor)
-      rescue => e
-        puts("Error: #{e.message}", e.backtrace)
-      end
-
-      sleep(1.minute)
-    end
-  end
+  Scheduler.start
 
   App.run!
 end

@@ -10,6 +10,7 @@ require "tempfile"
 
 require_relative "../app/check"
 require_relative "../app/helpers"
+require_relative "../app/scheduler"
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
