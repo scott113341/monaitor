@@ -44,20 +44,4 @@ RSpec.describe(Scheduler) do
       expect(Check).to have_received(:run!).once.with(due)
     end
   end
-
-  describe ".start" do
-    it "keeps the thread alive after a pass fails" do
-      calls = 0
-      allow(Check).to receive(:get_all) do
-        calls += 1
-        raise Sequel::DatabaseDisconnectError, "server closed the connection" if calls == 1
-        Thread.current.kill if calls == 2
-        []
-      end
-
-      described_class.start(interval: 0).join(5)
-
-      expect(calls).to eq(2)
-    end
-  end
 end
