@@ -14,9 +14,9 @@ class Scheduler
     end
   end
 
-  def self.tick(now: Time.now.utc)
+  def self.tick
     Check.get_all.each do |monitor|
-      next unless due?(monitor, now:)
+      next unless due?(monitor)
 
       sleep(1.minute + rand(10.seconds))
       puts("Running #{monitor[:id]}")
@@ -28,10 +28,10 @@ class Scheduler
     log_error(e)
   end
 
-  def self.due?(monitor, now: Time.now.utc)
+  def self.due?(monitor)
     return false if monitor[:paused]
 
-    (monitor[:last_run_at] || Time.at(0)) <= now - monitor[:run_interval]
+    (monitor[:last_run_at] || Time.at(0)) <= Time.now.utc - monitor[:run_interval]
   end
 
   def self.log_error(error)
