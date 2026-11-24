@@ -1,9 +1,4 @@
 # Runs due monitors on a background thread.
-#
-# Each pass is wrapped in its own rescue. When Postgres restarts, the query that
-# lists monitors raises Sequel::DatabaseDisconnectError. Sequel drops the dead
-# connection from its pool, so the next pass reconnects, but only if the thread
-# is still alive to make it.
 class Scheduler
   def self.start(interval: 1.minute)
     Thread.new do
